@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FHTW.Swen2.Places.Model", "FHTW.Swen2.Places.Model\FHTW.Swen2.Places.Model.csproj", "{31C4948D-5DC6-4935-B0A9-B6CD23B0C04B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FHTW.Swen2.Places.TestGround", "FHTW.Swen2.Places.TestGround\FHTW.Swen2.Places.TestGround.csproj", "{EF248D9D-64FC-4049-96EE-740127190AF8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31C4948D-5DC6-4935-B0A9-B6CD23B0C04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31C4948D-5DC6-4935-B0A9-B6CD23B0C04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31C4948D-5DC6-4935-B0A9-B6CD23B0C04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31C4948D-5DC6-4935-B0A9-B6CD23B0C04B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF248D9D-64FC-4049-96EE-740127190AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF248D9D-64FC-4049-96EE-740127190AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF248D9D-64FC-4049-96EE-740127190AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF248D9D-64FC-4049-96EE-740127190AF8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14C06912-BC65-4E24-94C5-FB0AFAEE978F}
+	EndGlobalSection
+EndGlobal
