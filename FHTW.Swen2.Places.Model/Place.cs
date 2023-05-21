@@ -1,17 +1,98 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 
 
 
 namespace FHTW.Swen2.Places.Model
 {
     /// <summary>This class represents a place.</summary>
+    [Table("PLACES")][PrimaryKey("ID")]
     public class Place
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // public properties                                                                                        //
+        // private members                                                                                          //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>Lazy loader.</summary>
+        private readonly ILazyLoader? _Lazy;
+
+        /// <summary>Stories collection.</summary>
+        private ICollection<Story>? _Stories = null;
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // constructors                                                                                             //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>Creates a new instance of this class.</summary>
+        public Place()
+        {}
+
+
+        /// <summary>Creates a new instance of this class.</summary>
+        /// <param name="lazy">Lazy loader.</param>
+        private Place(ILazyLoader lazy)
+        {
+            _Lazy = lazy;
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private properties                                                                                       //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
+        /// <summary>Gets or sets the serialized loaction data.</summary>
+        [Column("LOCATION")]
+        internal string _Location
+        {
+            get
+            {
+                if(Location == null) { return ""; }
+                if(Location is Coordinates)
+                {
+                    return "cood://" + JsonSerializer.Serialize((Coordinates) Location);
+                }
+                if(Location is Address)
+                {
+                    return "addr://" + JsonSerializer.Serialize((Address) Location);
+                }
+
+                return "";
+            }
+            set
+            {
+                if(value != null)
+                {
+                    if(value.StartsWith("cood://"))
+                    {
+                        Location = JsonSerializer.Deserialize<Coordinates>(value[7..]);
+                        return;
+                    }
+                    if(value.StartsWith("addr://"))
+                    {
+                        Location = JsonSerializer.Deserialize<Address>(value[7..]);
+                        return;
+                    }
+                }
+
+                Location = null;
+            }
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public properties                                                                                        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>Gets the place ID.</summary>
+        [Key][Column("ID")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID
         {
             get; private set;
@@ -19,6 +100,7 @@ namespace FHTW.Swen2.Places.Model
 
 
         /// <summary>Gets or sets the place name.</summary>
+        [Column("NAME")]
         public string Name
         {
             get; set;
@@ -26,6 +108,7 @@ namespace FHTW.Swen2.Places.Model
 
 
         /// <summary>Gets or sets the place description.</summary>
+        [Column("DESCRIPTION")]
         public string Description
         {
             get; set;
@@ -33,6 +116,7 @@ namespace FHTW.Swen2.Places.Model
 
 
         /// <summary>Gets or sets the place location.</summary>
+        [NotMapped]
         public ILocation? Location
         {
             get; set;
@@ -40,9 +124,18 @@ namespace FHTW.Swen2.Places.Model
 
 
         /// <summary>Gets or sets the place story list.</summary>
-        public List<Story> Stories
+        public ICollection<Story> Stories
         {
-            get; private set;
-        } = new();
+            get
+            {
+                if(_Lazy == null)
+                {
+                    if(_Stories == null) { _Stories = new List<Story>(); }
+                    return _Stories;
+                }
+
+                return _Lazy.Load(this, ref _Stories) ?? (_Stories = new List<Story>());
+            }
+        }
     }
 }
