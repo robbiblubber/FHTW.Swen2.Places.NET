@@ -5,7 +5,7 @@
 namespace FHTW.Swen2.Places.Model
 {
     /// <summary>This class contains basic application data.</summary>
-    public class App
+    public class Root
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // public static members                                                                                    //

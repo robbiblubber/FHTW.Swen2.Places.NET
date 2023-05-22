@@ -44,7 +44,7 @@ namespace FHTW.Swen2.Places.TestGround
             App.Db.SaveChanges();
             */
 
-            foreach(Place i in App.Db.Places)
+            foreach(Place i in Root.Db.Places)
             {
                 Console.WriteLine(i.Name);
 
