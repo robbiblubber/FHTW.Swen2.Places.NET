@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:FHTW.Swen2.Places.Client"
         mc:Ignorable="d"
         Title="MainWindow" Height="355" Width="800">
-    <DockPanel LastChildFill="False">
-        <Menu Width="796" Height="18" DockPanel.Dock="Top">
+    <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Menu Width="796" Height="18" DockPanel.Dock="Top" HorizontalAlignment="Stretch">
             <MenuItem Header="File"/>
         </Menu>
-        <Grid DockPanel.Dock="Top" Height="32">
-            <Label Content="Search:" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-            <TextBox HorizontalAlignment="Left" Height="22" Margin="69,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="299"/>
-            <Button Content="Search" HorizontalAlignment="Left" Height="22" Margin="373,0,0,0" VerticalAlignment="Center" Width="64"/>
+        <Grid DockPanel.Dock="Top" Height="32" HorizontalAlignment="Stretch">
+            <Label Content="Search:" HorizontalAlignment="Left" Margin="10,2,0,-2"/>
+            <TextBox HorizontalAlignment="Left" Height="22" Margin="69,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="320"/>
+            <Button Content="Search" HorizontalAlignment="Left" Height="22" Margin="397,0,0,0" VerticalAlignment="Center" Width="64"/>
         </Grid>
-        <Grid Width="799"/>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </DockPanel>
 </Window>
