@@ -4,66 +4,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FHTW.Swen2.Places.Client
 {
-    /// <summary>This class encapsulates search result data.</summary>
-    public class SearchResultData
+    public class ResultSelectCommand: ICommand
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // private members                                                                                          //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /// <summary>Parent result page view model.</summary>
-        internal ResultPageViewModel _Parent;
+        /// <summary>Parent view model.</summary>
+        private ResultPageViewModel _Parent;
 
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // constructors                                                                                             //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         /// <summary>Creates a new instance of this class.</summary>
         /// <param name="parent">Parent view model.</param>
-        /// <param name="place">Place that is represented by this instance.</param>
-        internal SearchResultData(ResultPageViewModel parent, Place place)
+        internal ResultSelectCommand(ResultPageViewModel parent)
         {
             _Parent = parent;
-            Place = place;
-            SelectCommand = new(parent);
         }
 
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // public properties                                                                                        //
+        // [interface] ICommand                                                                                     //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        /// <summary>Gets the represented place.</summary>
-        public Place Place
+
+        /// <summary>Occures when the CanExecute() result has changed.</summary>
+        public event EventHandler? CanExecuteChanged;
+
+
+        /// <summary>Returns if the command can be executed.</summary>
+        /// <param name="parameter">Parameter.</param>
+        /// <returns>Returns TRUE when the command can be executed, otherwise returns FALSE.</returns>
+        public bool CanExecute(object? parameter)
         {
-            get; private set;
+            return true;
         }
 
 
-        /// <summary>Gets the result name.</summary>
-        public string Name
+        /// <summary>Executes the command.</summary>
+        /// <param name="parameter">Paramter.</param>
+        public void Execute(object? parameter)
         {
-            get { return Place.Name; }
-        }
-
-
-        /// <summary>Gets the result description.</summary>
-        public string Description
-        {
-            get { return Place.Description; }
-        }
-
-
-        /// <summary>Gets the select command.</summary>
-        public ResultSelectCommand SelectCommand
-        {
-            get; private set;
+            _Parent._Parent.PlaceDetails.Show(_Parent.SearchResults[_Parent.ResultIndex].Place);
         }
     }
 }

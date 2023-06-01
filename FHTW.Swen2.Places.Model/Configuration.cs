@@ -37,6 +37,12 @@ namespace FHTW.Swen2.Places.Model
         } = @"C:\home\test\places.db";
 
 
+        public string ImagePath
+        {
+            get; set;
+        } = @"C:\home\img";
+
+
         /// <summary>Gets or sets the log level for the application.</summary>
         public Level LogLevel
         {

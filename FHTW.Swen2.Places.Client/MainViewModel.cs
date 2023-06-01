@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FHTW.Swen2.Places.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,15 +23,23 @@ namespace FHTW.Swen2.Places.Client
         private string _SearchExpression = "";
 
 
+        private ButtonViewModel _Button1 = ButtonViewModel.EMPTY;
+        private ButtonViewModel _Button2 = ButtonViewModel.EMPTY;
+        private ButtonViewModel _Button3 = ButtonViewModel.EMPTY;
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // constructors                                                                                             //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         /// <summary>Creates a new instance of this class.</summary>
         public MainViewModel() 
         {
+            SearchCommand = new(this);
             ResultPage = new(this);
+            PlaceDetails = new(this);
+
+            Root.Init();
         }
 
 
@@ -50,6 +59,13 @@ namespace FHTW.Swen2.Places.Client
         
         /// <summary>Gets the result page view model.</summary>
         public ResultPageViewModel ResultPage
+        {
+            get; private set;
+        }
+
+
+        /// <summary>Gets the place details view model.</summary>
+        public PlaceDetailViewModel PlaceDetails
         {
             get; private set;
         }
@@ -82,6 +98,71 @@ namespace FHTW.Swen2.Places.Client
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchExpression)));
                 }
             }
+        }
+
+
+        /// <summary>Gets or sets the view model for button 1.</summary>
+        public ButtonViewModel Button1
+        {
+            get { return _Button1; }
+            set
+            {
+                if(_Button1 != value)
+                {
+                    _Button1 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Button1)));
+                }
+            }
+        }
+
+
+        /// <summary>Gets or sets the view model for button 2.</summary>
+        public ButtonViewModel Button2
+        {
+            get { return _Button2; }
+            set
+            {
+                if(_Button2 != value)
+                {
+                    _Button2 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Button2)));
+                }
+            }
+        }
+
+
+        /// <summary>Gets or sets the view model for button 3.</summary>
+        public ButtonViewModel Button3
+        {
+            get { return _Button3; }
+            set
+            {
+                if(_Button3 != value)
+                {
+                    _Button3 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Button3)));
+                }
+            }
+        }
+
+
+        /// <summary>Gets the search command.</summary>
+        public SearchCommand SearchCommand
+        {
+            get; private set;
+        }
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public methods                                                                                           //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Shows the search result page.</summary>
+        public void ShowSearchResults()
+        {
+            ResultBoxVisibility = Visibility.Visible;
         }
     }
 }

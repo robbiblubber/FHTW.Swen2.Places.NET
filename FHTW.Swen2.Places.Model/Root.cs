@@ -16,5 +16,17 @@ namespace FHTW.Swen2.Places.Model
 
         /// <summary>Gets the data context.</summary>
         public static readonly DataContext Db = new();
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public static methods                                                                                    //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Initializes the application.</summary>
+        public static void Init()
+        {
+            Db.RebuildFtsIndex();
+        }
     }
 }
