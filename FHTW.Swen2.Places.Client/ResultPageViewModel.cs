@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace FHTW.Swen2.Places.Client
 {
+    /// <summary>This class provides a view model for the result page.</summary>
     public class ResultPageViewModel: INotifyPropertyChanged
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////

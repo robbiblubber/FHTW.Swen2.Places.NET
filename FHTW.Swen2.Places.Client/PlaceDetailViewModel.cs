@@ -1,13 +1,10 @@
-﻿using FHTW.Swen2.Places.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+
+using FHTW.Swen2.Places.Model;
+
+
 
 namespace FHTW.Swen2.Places.Client
 {
@@ -24,20 +21,28 @@ namespace FHTW.Swen2.Places.Client
         /// <summary>Parent view model.</summary>
         internal readonly MainViewModel _Parent;
 
-        private string _Name;
-        private string _Description;
-        private string _Latitude;
-        private string _Longitude;
-        private string _Street;
-        private string _Code;
-        private string _Town;
-        private string _Country;
+        private string _Name = "";
+        private string _Description = "";
+        private string _Latitude = "";
+        private string _Longitude = "";
+        private string _Street = "";
+        private string _Code = "";
+        private string _Town = "";
+        private string _Country = "";
 
+        /// <summary>Flag that controls if the address is being shown.</summary>
         private bool _AddressShowing;
 
+        /// <summary>Edit lock flag.</summary>
         private bool _Locked = true;
+
+        /// <summary>Editing border width.</summary>
         private int _EditingBorders = 0;
+
+        /// <summary>Switch link label visibility.</summary>
         private Visibility _SwitchLinkVisibility = Visibility.Hidden;
+
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // constructors                                                                                             //
@@ -56,7 +61,8 @@ namespace FHTW.Swen2.Places.Client
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // public properties                                                                                           //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
+        /// <summary>Gets or sets the place name.</summary>
         public string Name
         {
             get { return _Name; }
@@ -71,6 +77,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the place description.</summary>
         public string Description
         {
             get { return _Description; }
@@ -85,6 +92,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the latitude.</summary>
         public string Latitude
         {
             get { return _Latitude; }
@@ -99,6 +107,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the longitude.</summary>
         public string Longitude
         {
             get { return _Longitude; }
@@ -113,6 +122,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the street.</summary>
         public string Street
         {
             get { return _Street; }
@@ -127,6 +137,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the postal code.</summary>
         public string Code
         {
             get { return _Code; }
@@ -141,6 +152,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the town.</summary>
         public string Town
         {
             get { return _Town; }
@@ -155,6 +167,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the country.</summary>
         public string Country
         {
             get { return _Country; }
@@ -169,6 +182,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets if the view is locked for editing.</summary>
         public bool Locked
         {
             get { return _Locked; }
@@ -183,6 +197,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the editing border width.</summary>
         public int EditingBorders
         {
             get { return _EditingBorders; }
@@ -197,6 +212,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets if the switch link is visible.</summary>
         public Visibility SwitchLinkVisibility
         {
             get { return _SwitchLinkVisibility; }
@@ -211,41 +227,43 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets if the address is shown.</summary>
         public bool AddressShowing
         {
             get { return _AddressShowing; }
             set
             {
-                if(_AddressShowing != value)
-                {
-                    _AddressShowing = value;
-                    PropertyChanged?.Invoke(this, new(nameof(AddressShowing)));
+                _AddressShowing = value;
 
-                    PropertyChanged?.Invoke(this, new(nameof(AddressVisibility)));
-                    PropertyChanged?.Invoke(this, new(nameof(CoordinatesVisibility)));
-                }
+                PropertyChanged?.Invoke(this, new(nameof(AddressShowing)));
+                PropertyChanged?.Invoke(this, new(nameof(AddressVisibility)));
+                PropertyChanged?.Invoke(this, new(nameof(CoordinatesVisibility)));
             }
         }
 
 
+        /// <summary>Gets the address grid visiblility.</summary>
         public Visibility AddressVisibility
         {
             get { return (AddressShowing ? Visibility.Visible : Visibility.Hidden); }
         }
 
 
+        /// <summary>Gets the coordinates grid visiblility.</summary>
         public Visibility CoordinatesVisibility
         {
             get { return (AddressShowing ? Visibility.Hidden: Visibility.Visible); }
         }
 
 
+        /// <summary>Gets the switch location command.</summary>
         public SwitchLocationCommand SwitchLocation
         {
             get; private set;
         }
 
 
+        /// <summary>Gets the stories.</summary>
         public ObservableCollection<StoryListData> Stories
         {
             get; private set;
@@ -278,6 +296,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Resets the data shown.</summary>
         public void ResetData()
         {
             if(_Place == null) return;
@@ -299,23 +318,28 @@ namespace FHTW.Swen2.Places.Client
                 Latitude = ((Coordinates) _Place.Location).Latitude.ToString();
                 Longitude = ((Coordinates) _Place.Location).Longitude.ToString();
 
-                AddressShowing = true;
+                AddressShowing = false;
             }
 
             _Parent.Button1 = new(true, "Edit", new EditPlaceCommand(this));
+            _Parent.Button2 = ButtonViewModel.EMPTY;
         }
 
 
+        /// <summary>Returns if the place can be saved.</summary>
+        /// <returns>Returns TRUE if the place can be saved, otherwise returns FALSE.</returns>
         public bool CanSave()
         {
             return true;
         }
 
 
+        /// <summary>Saves the place.</summary>
         public void Save()
         {}
 
 
+        /// <summary>Starts editing mode.</summary>
         public void StartEdit()
         {
             Locked = false;
@@ -324,6 +348,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Cancels editing mode.</summary>
         public void CancelEdit()
         {
             Locked = true;

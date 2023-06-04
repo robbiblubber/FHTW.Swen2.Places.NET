@@ -1,20 +1,33 @@
-﻿using FHTW.Swen2.Places.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+
+using FHTW.Swen2.Places.Model;
+
+
 
 namespace FHTW.Swen2.Places.Client
 {
+    /// <summary>This class represents story data in a list.</summary>
     public class StoryListData
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private members                                                                                          //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Parent view model.</summary>
         internal PlaceDetailViewModel _Parent;
+
+        /// <summary>Story.</summary>
         private Story _Story;
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // constructors                                                                                             //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Creates a new instance of this class.</summary>
+        /// <param name="parent">Parent view model.</param>
+        /// <param name="story">Story.</param>
         internal StoryListData(PlaceDetailViewModel parent, Story story)
         {
             _Parent = parent;
@@ -22,6 +35,12 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public properties                                                                                        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Gets the story image source.</summary>
         public string ImageSource
         {
             get
@@ -37,6 +56,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets the story text.</summary>
         public string Text
         {
             get { return _Story.Text; }

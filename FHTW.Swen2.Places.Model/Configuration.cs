@@ -1,6 +1,8 @@
 ﻿using log4net.Core;
 using System.Text.Json;
 
+
+
 namespace FHTW.Swen2.Places.Model
 {
     /// <summary>This class contains application configuration data.</summary>
@@ -37,6 +39,7 @@ namespace FHTW.Swen2.Places.Model
         } = @"C:\home\test\places.db";
 
 
+        /// <summary>Gets the image path.</summary>
         public string ImagePath
         {
             get; set;

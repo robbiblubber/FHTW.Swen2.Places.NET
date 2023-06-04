@@ -1,13 +1,13 @@
-﻿using FHTW.Swen2.Places.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Input;
+
+using FHTW.Swen2.Places.Model;
+
+
 
 namespace FHTW.Swen2.Places.Client
 {
+    /// <summary>This class provides a search command.</summary>
     public class SearchCommand: ICommand
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////

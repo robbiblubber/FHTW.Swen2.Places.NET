@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FHTW.Swen2.Places.Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="355" Width="800" FocusManager.FocusedElement="{Binding ElementName=_TextSearch}">
-    <Window.DataContext><local:MainViewModel /></Window.DataContext>
+        Title="MainWindow" Height="669" Width="1211" FocusManager.FocusedElement="{Binding ElementName=_TextSearch}">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
     <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" VerticalAlignment="Stretch" >
         <Menu Width="796" Height="18" DockPanel.Dock="Top">
             <MenuItem Header="File"/>
@@ -26,20 +28,20 @@
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding ResultBoxVisibility}" ItemsSource="{Binding ResultPage.SearchResults}" SelectedIndex="{Binding ResultPage.ResultIndex}">
                 <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,2" HorizontalAlignment="Stretch">
-                        <Grid.InputBindings>
+                    <DataTemplate>
+                        <Grid Margin="0,2" HorizontalAlignment="Stretch">
+                            <Grid.InputBindings>
                                 <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SelectCommand}"/>
                             </Grid.InputBindings>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock Margin="10,1,10,1" Grid.Column="0" Text="{Binding Name}"/>
-                        <TextBlock Margin="10,1,10,1" Grid.Column="1" Text="{Binding Description}"/>
-                    </Grid>
-                </DataTemplate>
+                            <TextBlock Margin="10,1,10,1" Grid.Column="0" Text="{Binding Name}"/>
+                            <TextBlock Margin="10,1,10,1" Grid.Column="1" Text="{Binding Description}"/>
+                        </Grid>
+                    </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             <local:PlaceControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"

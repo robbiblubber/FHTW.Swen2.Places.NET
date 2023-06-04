@@ -1,11 +1,9 @@
-﻿using FHTW.Swen2.Places.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
+
+using FHTW.Swen2.Places.Model;
+
+
 
 namespace FHTW.Swen2.Places.Client
 {
@@ -21,10 +19,8 @@ namespace FHTW.Swen2.Places.Client
 
         private Visibility _PlaceControlVisibility = Visibility.Hidden;
 
-
         /// <summary>Search expression.</summary>
         private string _SearchExpression = "";
-
 
         private ButtonViewModel _Button1 = ButtonViewModel.EMPTY;
         private ButtonViewModel _Button2 = ButtonViewModel.EMPTY;
@@ -89,6 +85,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Gets or sets the visibility for the place control.</summary>
         public Visibility PlaceControlVisibility
         {
             get { return _PlaceControlVisibility; }
@@ -184,6 +181,7 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        /// <summary>Shows the place details page.</summary>
         public void ShowPlace()
         {
             PlaceControlVisibility = Visibility.Visible;
