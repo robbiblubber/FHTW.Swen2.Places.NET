@@ -42,6 +42,8 @@
                 </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <local:PlaceControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Visibility="{Binding PlaceControlVisibility, Mode=OneWay}"/>
         </Grid>
     </DockPanel>
 </Window>

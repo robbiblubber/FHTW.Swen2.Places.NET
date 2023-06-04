@@ -19,6 +19,9 @@ namespace FHTW.Swen2.Places.Client
         /// <summary>Result box visibility flag.</summary>
         private Visibility _ResultBoxVisibility = Visibility.Hidden;
 
+        private Visibility _PlaceControlVisibility = Visibility.Hidden;
+
+
         /// <summary>Search expression.</summary>
         private string _SearchExpression = "";
 
@@ -81,6 +84,20 @@ namespace FHTW.Swen2.Places.Client
                 {
                     _ResultBoxVisibility = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultBoxVisibility)));
+                }
+            }
+        }
+
+
+        public Visibility PlaceControlVisibility
+        {
+            get { return _PlaceControlVisibility; }
+            set
+            {
+                if(_PlaceControlVisibility != value)
+                {
+                    _PlaceControlVisibility = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PlaceControlVisibility)));
                 }
             }
         }
@@ -163,6 +180,14 @@ namespace FHTW.Swen2.Places.Client
         public void ShowSearchResults()
         {
             ResultBoxVisibility = Visibility.Visible;
+            PlaceControlVisibility = Visibility.Hidden;
+        }
+
+
+        public void ShowPlace()
+        {
+            PlaceControlVisibility = Visibility.Visible;
+            ResultBoxVisibility = Visibility.Hidden;
         }
     }
 }

@@ -274,7 +274,7 @@ namespace FHTW.Swen2.Places.Client
             PropertyChanged?.Invoke(this, new(nameof(AddressVisibility)));
             PropertyChanged?.Invoke(this, new(nameof(CoordinatesVisibility)));
 
-            // TODO: _Parent.ShowPlace();
+            _Parent.ShowPlace();
         }
 
 

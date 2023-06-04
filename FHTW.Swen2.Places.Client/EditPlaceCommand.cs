@@ -7,8 +7,14 @@ using System.Windows.Input;
 
 namespace FHTW.Swen2.Places.Client
 {
+    /// <summary>This class implements a command to edit a place.</summary>
     public class EditPlaceCommand: ICommand
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private members                                                                                          //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>Parent view model.</summary>
         internal PlaceDetailViewModel _Parent;
 
         internal EditPlaceCommand(PlaceDetailViewModel parent)

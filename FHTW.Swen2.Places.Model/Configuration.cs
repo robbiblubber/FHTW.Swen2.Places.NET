@@ -40,7 +40,7 @@ namespace FHTW.Swen2.Places.Model
         public string ImagePath
         {
             get; set;
-        } = @"C:\home\img";
+        } = @"C:\home\test\img";
 
 
         /// <summary>Gets or sets the log level for the application.</summary>
