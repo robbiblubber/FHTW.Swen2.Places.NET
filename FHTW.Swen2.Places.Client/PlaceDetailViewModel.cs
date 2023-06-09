@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Windows;
-
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using FHTW.Swen2.Places.Model;
 
 
@@ -11,6 +14,15 @@ namespace FHTW.Swen2.Places.Client
     /// <summary>This class implements a view model for the place details.</summary>
     public class PlaceDetailViewModel: INotifyPropertyChanged
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private static members                                                                                   //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>Empty map image.</summary>
+        private static readonly BitmapImage _EMPTY = _CreateEmpty();
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // private members                                                                                          //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +71,27 @@ namespace FHTW.Swen2.Places.Client
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // public properties                                                                                           //
+        // private static methods                                                                                   //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Creates an empty image.</summary>
+        /// <returns>Image.</returns>
+        private static BitmapImage _CreateEmpty()
+        {
+            BitmapImage rval = new();
+            rval.BeginInit();
+            rval.CacheOption = BitmapCacheOption.OnLoad;
+            rval.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            rval.UriSource = new(Root.Config.ImagePath.Trim('\\') + @"\_empty.jpg");
+            rval.EndInit();
+
+            return rval;
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public properties                                                                                        //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>Gets or sets the place name.</summary>
@@ -242,6 +274,29 @@ namespace FHTW.Swen2.Places.Client
         }
 
 
+        public BitmapImage MapImage
+        {
+            get
+            {
+                string file = _Place?.MapImage ?? "_";
+
+                if(File.Exists(file))
+                {
+                    BitmapImage rval = new();
+                    rval.BeginInit();
+                    rval.CacheOption = BitmapCacheOption.OnLoad;
+                    rval.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                    rval.UriSource = new(file);
+                    rval.EndInit();
+
+                    return rval;
+                }
+
+                return _EMPTY;
+            }
+        }
+
+
         /// <summary>Gets the address grid visiblility.</summary>
         public Visibility AddressVisibility
         {
@@ -310,6 +365,8 @@ namespace FHTW.Swen2.Places.Client
 
             AddressShowing = true;
 
+            Street = Code = Town = Country = Latitude = Longitude = "";
+
             if(_Place.Location is Address)
             {
                 Street = ((Address) _Place.Location).Street;
@@ -326,7 +383,10 @@ namespace FHTW.Swen2.Places.Client
             }
 
             _Parent.Button1 = new(true, "Edit", new EditPlaceCommand(this));
-            _Parent.Button2 = ButtonViewModel.EMPTY;
+            _Parent.Button2 = new(true, "New", new NewPlaceCommand(this));
+            _Parent.Button3 = ButtonViewModel.EMPTY;
+
+            PropertyChanged?.Invoke(this, new(nameof(MapImage)));
         }
 
 
@@ -351,7 +411,29 @@ namespace FHTW.Swen2.Places.Client
 
         /// <summary>Saves the place.</summary>
         public void Save()
-        {}
+        {
+            if(_Place == null) return;
+
+            if(!Root.Db.Places.Contains(_Place))
+            {
+                Root.Db.Places.Add(_Place);
+            }
+
+            _Place.Name = Name;
+            _Place.Description = Description;
+
+            if(AddressShowing)
+            {
+                _Place.Location = new Address(Street, Town, Code, Country);
+            }
+            else { _Place.Location = new Coordinates(double.Parse(Latitude), double.Parse(Longitude)); }
+
+            PropertyChanged?.Invoke(this, new(nameof(MapImage)));
+
+            Root.Db.SaveChanges();
+
+            ResetData();
+        }
 
 
         /// <summary>Starts editing mode.</summary>
@@ -370,6 +452,23 @@ namespace FHTW.Swen2.Places.Client
         public void CancelEdit()
         {
             ResetData();
+
+            if(!Root.Db.Places.Contains(_Place))
+            {
+                _Place = null;
+                _Parent.Button1 = new(true, "New", new NewPlaceCommand(this));
+                _Parent.Button2 = _Parent.Button3 = ButtonViewModel.EMPTY;
+                _Parent.ShowNothing();
+            }
+        }
+
+
+        /// <summary>Creates a new place.</summary>
+        public void CreateNew()
+        {
+            _Place = new();
+            ResetData();
+            StartEdit();
         }
 
 

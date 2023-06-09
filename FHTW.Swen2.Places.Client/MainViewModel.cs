@@ -38,6 +38,8 @@ namespace FHTW.Swen2.Places.Client
             ResultPage = new(this);
             PlaceDetails = new(this);
 
+            Button1 = new(true, "New", new NewPlaceCommand(PlaceDetails));
+
             Root.Init();
         }
 
@@ -173,6 +175,13 @@ namespace FHTW.Swen2.Places.Client
         // public methods                                                                                           //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
+        /// <summary>Shows nothing on the main window.</summary>
+        public void ShowNothing()
+        {
+            ResultBoxVisibility = PlaceControlVisibility = Visibility.Hidden;
+        }
+
+
         /// <summary>Shows the search result page.</summary>
         public void ShowSearchResults()
         {

@@ -22,6 +22,9 @@ namespace FHTW.Swen2.Places.Model
         /// <summary>Stories collection.</summary>
         private ICollection<Story>? _Stories = null;
 
+        /// <summary>Location backing field.</summary>
+        private ILocation? _BackingLocation = null;
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,6 +88,27 @@ namespace FHTW.Swen2.Places.Model
         }
 
 
+        /// <summary>Gets the image path.</summary>
+        private string _ImagePath
+        {
+            get { return Root.Config.ImagePath.TrimEnd('\\') + @"\_m" + ID.ToString() + ".jpg"; }
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private methods                                                                                          //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Updates the map image for the place.</summary>
+        private void _UpdateImage()
+        {
+            if(Location != null)
+            {
+                MapData.GenerateMap(Location, _ImagePath);
+            }
+        }
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // public properties                                                                                        //
@@ -119,7 +143,12 @@ namespace FHTW.Swen2.Places.Model
         [NotMapped]
         public ILocation? Location
         {
-            get; set;
+            get { return _BackingLocation; } 
+            set 
+            {
+                _BackingLocation = value;
+                _UpdateImage();
+            }
         }
 
 
@@ -135,6 +164,20 @@ namespace FHTW.Swen2.Places.Model
                 }
 
                 return _Lazy.Load(this, ref _Stories) ?? (_Stories = new List<Story>());
+            }
+        }
+
+
+        /// <summary>Gets the map image path for the place.</summary>
+        [NotMapped]
+        public string MapImage
+        {
+            get
+            {
+                if(Location == null) { return "_"; }
+
+                if(!File.Exists(_ImagePath)) { _UpdateImage(); }
+                return _ImagePath;
             }
         }
     }

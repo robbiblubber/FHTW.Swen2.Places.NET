@@ -49,7 +49,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <Image Height="200" Width="300" Margin="20,20,20,20" Source="C:\home\test\img\_empty.jpg"/>
+            <Image Height="200" Width="300" Margin="20,20,20,20" Source="{Binding PlaceDetails.MapImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBox TextWrapping="Wrap" Text="{Binding PlaceDetails.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,20,20,20" Height="88" Width="700" Background="Transparent" BorderThickness="{Binding PlaceDetails.EditingBorders}" IsReadOnly="{Binding PlaceDetails.Locked}"/>
 
         </WrapPanel>

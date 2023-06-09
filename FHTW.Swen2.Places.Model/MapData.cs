@@ -98,5 +98,29 @@ namespace FHTW.Swen2.Places.Model
             coordinates = new(lat, lng);
             return rval;
         }
+
+
+        /// <summary>Generates a map.</summary>
+        /// <param name="location">Location.</param>
+        /// <param name="fileName">File name.</param>
+        public static void GenerateMap(ILocation location, string fileName)
+        {
+            Coordinates c = new();
+
+            if(location is Address)
+            {
+                ResolveAddress((Address) location, out c);
+            }
+            else { c = (Coordinates) location; }
+
+            HttpClient cl = new();
+
+            byte[] pic =
+                   cl.GetByteArrayAsync("https://www.mapquestapi.com/staticmap/v5/" +
+                   $"map?key={_KEY}&center={(c.Latitude + .004).ToString().Replace(',', '.')},{(c.Longitude + .004).ToString().Replace(',', '.')}" +
+                   $"&locations={c.Latitude.ToString().Replace(',', '.')},{c.Longitude.ToString().Replace(',', '.')}|marker=3B5998-sm&size=300,200&zoom=13").Result;
+
+            File.WriteAllBytes(fileName, pic);
+        }
     }
 }
