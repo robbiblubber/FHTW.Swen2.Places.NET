@@ -50,17 +50,13 @@ namespace FHTW.Swen2.Places.Model
             double? lat = null, lng = null;
             bool rval = false;
 
-            string r = "";
-
             HttpClient cl = new();
 
-            JsonNode? data = JsonNode.Parse(r =
-                cl.GetAsync("https://www.mapquestapi.com/geocoding/v1/" +
-                $"address?key={_KEY}&street={HttpUtility.UrlEncode(address.Street)}" +
-                $"&postalCode={HttpUtility.UrlEncode(address.Code)}" +
-                $"&city={HttpUtility.UrlEncode(address.Town)}" +
-                $"&country={HttpUtility.UrlEncode(address.Country)}&outFormat=json")
-                .Result.Content.ReadAsStringAsync().Result);
+            JsonNode? data = JsonNode.Parse(cl.GetAsync("https://www.mapquestapi.com/geocoding/v1/" +
+                                           $"address?key={_KEY}&street={HttpUtility.UrlEncode(address.Street)}" +
+                                           $"&postalCode={HttpUtility.UrlEncode(address.Code)}" +
+                                           $"&city={HttpUtility.UrlEncode(address.Town)}" +
+                                           $"&country={HttpUtility.UrlEncode(address.Country)}&outFormat=json").Result.Content.ReadAsStringAsync().Result ?? "");
 
             if(data != null ) 
             {
