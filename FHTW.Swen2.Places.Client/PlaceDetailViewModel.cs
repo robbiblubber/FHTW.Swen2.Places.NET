@@ -330,6 +330,17 @@ namespace FHTW.Swen2.Places.Client
         /// <returns>Returns TRUE if the place can be saved, otherwise returns FALSE.</returns>
         public bool CanSave()
         {
+            if(string.IsNullOrWhiteSpace(Name)) return false;
+
+            if(AddressShowing)
+            {
+                if(!MapData.ResolveAddress(Street, Code, Town, Country, out _)) { return false; }
+            }
+            else if(!MapData.ResolveCoordinates(Latitude, Longitude, out _))
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -345,6 +356,9 @@ namespace FHTW.Swen2.Places.Client
             Locked = false;
             EditingBorders = 1;
             SwitchLinkVisibility = Visibility.Visible;
+
+            _Parent.Button1 = new(true, "Save", new SavePlaceCommand(this));
+            _Parent.Button2 = new(true, "Cancel", new CancelEditPlaceCommand(this));
         }
 
 

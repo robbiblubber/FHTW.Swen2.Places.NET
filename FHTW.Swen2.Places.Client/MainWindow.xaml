@@ -10,7 +10,7 @@
         <local:MainViewModel />
     </Window.DataContext>
     <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" VerticalAlignment="Stretch" >
-        <Menu Width="796" Height="18" DockPanel.Dock="Top">
+        <Menu Height="18" DockPanel.Dock="Top" HorizontalAlignment="Stretch">
             <MenuItem Header="File"/>
         </Menu>
         <Grid DockPanel.Dock="Top" Height="32">
