@@ -301,6 +301,10 @@ namespace FHTW.Swen2.Places.Client
         {
             if(_Place == null) return;
 
+            Locked = true;
+            EditingBorders = 0;
+            SwitchLinkVisibility = Visibility.Hidden;
+
             Name = _Place.Name;
             Description = _Place.Description;
 
@@ -365,10 +369,6 @@ namespace FHTW.Swen2.Places.Client
         /// <summary>Cancels editing mode.</summary>
         public void CancelEdit()
         {
-            Locked = true;
-            EditingBorders = 0;
-            SwitchLinkVisibility = Visibility.Hidden;
-
             ResetData();
         }
 
