@@ -5,7 +5,11 @@
 namespace FHTW.Swen2.Places.Model
 {
     /// <summary>This class represents an address.</summary>
-    public sealed record class Address(): ILocation
+    /// <param name="Street">Street.</param>
+    /// <param name="Town">Town.</param>
+    /// <param name="Code">Postal code.</param>
+    /// <param name="Country">Country.</param>
+    public sealed record class Address(string Street, string Town, string Code, string Country): ILocation
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // constructors                                                                                             //
@@ -16,44 +20,7 @@ namespace FHTW.Swen2.Places.Model
         /// <param name="town">Town.</param>
         /// <param name="code">Postal code.</param>
         /// <param name="country">Country.</param>
-        public Address(string street, string town, string code, string country): this()
-        {
-            Street = street;
-            Town = town;
-            Code = code;
-            Country = country;
-        }
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // public properties                                                                                        //
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        /// <summary>Gets or sets the street.</summary>
-        public string Street
-        {
-            get; set;
-        } = "";
-
-
-        /// <summary>Gets or sets the postal code.</summary>
-        public string Code
-        {
-            get; set;
-        } = "";
-
-
-        /// <summary>Gets or sets the town.</summary>
-        public string Town
-        {
-            get; set;
-        } = "";
-
-
-        /// <summary>Gets or sets the country.</summary>
-        public string Country
-        {
-            get; set;
-        } = "";
+        public Address(): this("", "", "", "")
+        {}
     }
 }

@@ -5,38 +5,16 @@
 namespace FHTW.Swen2.Places.Model
 {
     /// <summary>This class represents location coordinates.</summary>
-    public sealed record class Coordinates(): ILocation
+    /// <param name="Latitude">Latitude.</param>
+    /// <param name="Longitude">Longitude.</param>
+    public sealed record class Coordinates(double Latitude, double Longitude): ILocation
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // constructors                                                                                             //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         /// <summary>Creates a new instance of this class.</summary>
-        /// <param name="latitude">Latitude.</param>
-        /// <param name="longitude">Longitude.</param>
-        internal Coordinates(double latitude, double longitude): this()
-        {
-            Latitude = latitude;
-            Longitude = longitude;
-        }
-
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // public properties                                                                                        //
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        /// <summary>Gets or sets the latitude.</summary>
-        public double Latitude
-        {
-            get; set;
-        }
-
-
-        /// <summary>Gets or sets the longitude.</summary>
-        public double Longitude
-        {
-            get; set;
-        }
+        internal Coordinates(): this(0, 0)
+        {}
     }
 }
