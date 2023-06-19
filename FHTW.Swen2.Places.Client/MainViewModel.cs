@@ -32,11 +32,13 @@ namespace FHTW.Swen2.Places.Client
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>Creates a new instance of this class.</summary>
-        public MainViewModel() 
+        public MainViewModel()
         {
-            SearchCommand = new(this);
             ResultPage = new(this);
             PlaceDetails = new(this);
+
+            SearchCommand = new(this);
+            GenerateReportCommand = new(this);
 
             Button1 = new(true, "New", new NewPlaceCommand(PlaceDetails));
 
@@ -57,7 +59,7 @@ namespace FHTW.Swen2.Places.Client
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // public properties                                                                                        //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         /// <summary>Gets the result page view model.</summary>
         public ResultPageViewModel ResultPage
         {
@@ -76,7 +78,7 @@ namespace FHTW.Swen2.Places.Client
         public Visibility ResultBoxVisibility
         {
             get { return _ResultBoxVisibility; }
-            set 
+            set
             {
                 if(_ResultBoxVisibility != value)
                 {
@@ -168,6 +170,12 @@ namespace FHTW.Swen2.Places.Client
             get; private set;
         }
 
+
+        /// <summary>Gets the report generation command.</summary>
+        public GenerateReportCommand GenerateReportCommand
+        {
+            get; private set;
+        }
 
 
 

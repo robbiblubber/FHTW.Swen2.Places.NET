@@ -28,7 +28,7 @@ namespace FHTW.Swen2.Places.Client
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>Place currently displayed.</summary>
-        private Place? _Place;
+        internal Place? _Place;
 
         /// <summary>Parent view model.</summary>
         internal readonly MainViewModel _Parent;

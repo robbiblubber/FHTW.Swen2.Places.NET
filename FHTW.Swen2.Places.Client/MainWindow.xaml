@@ -12,6 +12,10 @@
     <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" VerticalAlignment="Stretch" >
         <Menu Height="18" DockPanel.Dock="Top" HorizontalAlignment="Stretch">
             <MenuItem Header="File"/>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Generate Report" Command="{Binding GenerateReportCommand}" />
+            </MenuItem>
+            <MenuItem Header="Help"/>
         </Menu>
         <Grid DockPanel.Dock="Top" Height="32">
             <Label Content="Search:" HorizontalAlignment="Left" Margin="10,0,0,0"/>
