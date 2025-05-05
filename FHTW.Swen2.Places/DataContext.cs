@@ -8,8 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FHTW.Swen2.Places
 {
+    /// <summary>This class implements the Entity Framework context for the data model.</summary>
     public class DataContext: DbContext
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // [override] DbContext                                                                                     //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Configures the context.</summary>
+        /// <param name="optionsBuilder">Options builder.</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite($"Data Source = {Configuration.Instance.DatabaseFile}");
@@ -17,6 +24,8 @@ namespace FHTW.Swen2.Places
         }
 
 
+        /// <summary>Configures the model.</summary>
+        /// <param name="modelBuilder">Model builder.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Story>().Property(m => m.Pictures)
