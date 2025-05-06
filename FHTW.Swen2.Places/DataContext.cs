@@ -28,6 +28,7 @@ namespace FHTW.Swen2.Places
         /// <param name="modelBuilder">Model builder.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Place>().Property(m => m._Location);
             modelBuilder.Entity<Story>().Property(m => m.Pictures)
                         .HasConversion(m => string.Join(',', m),
                                        m => m.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
