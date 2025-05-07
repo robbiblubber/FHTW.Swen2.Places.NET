@@ -10,6 +10,10 @@ namespace FHTW.Swen2.Places.ViewModel
     /// <summary>This class provides a configurable view model for a button.</summary>
     public class ButtonViewModel: INotifyPropertyChanged
     {
+        public static readonly ButtonViewModel EMPTY = new(false);
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // constructors                                                                                             //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////

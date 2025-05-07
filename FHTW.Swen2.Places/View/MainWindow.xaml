@@ -32,9 +32,12 @@
             <TextBox Name="_TextSearch" Margin="0,8,0,0" VerticalAlignment="Center" Grid.Column="1"/>
             <Button Content="Search" Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="3"/>
 
-            <Button Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="5"/>
-            <Button Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="6"/>
-            <Button Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="7"/>
+            <Button Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="5"
+                    Content="{Binding Button1.Text}" Visibility="{Binding Button1.Visibility}" Command="{Binding Button1.Command}"/>
+            <Button Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="6"
+                    Content="{Binding Button2.Text}" Visibility="{Binding Button2.Visibility}" Command="{Binding Button2.Command}"/>
+            <Button Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="7"
+                    Content="{Binding Button3.Text}" Visibility="{Binding Button3.Visibility}" Command="{Binding Button3.Command}"/>
         </Grid>
         <Grid>
             <ListBox BorderThickness="0"></ListBox>
