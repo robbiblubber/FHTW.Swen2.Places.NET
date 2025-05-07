@@ -14,23 +14,44 @@ namespace FHTW.Swen2.Places.Model
     [Table("PLACES")][PrimaryKey("ID")]
     public sealed class Place
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private members                                                                                          //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Lazy loader.</summary>
         private readonly ILazyLoader? _Lazy;
 
+        /// <summary>Stories for this instance.</summary>
         private ICollection<Story>? _Stories;
 
+        /// <summary>Location.</summary>
         private ILocation? _BackingLocation;
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // constructors                                                                                             //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Creates a new instance of this class.</summary>
         public Place()
         {}
 
 
+        /// <summary>Creates a new instance of this class.</summary>
+        /// <param name="lazy">Lazy loader.</param>
         private Place(ILazyLoader? lazy)
         {
             _Lazy = lazy;
         }
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public properties                                                                                        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Gets the place ID.</summary>
         [Key][Column("ID")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID
@@ -39,6 +60,7 @@ namespace FHTW.Swen2.Places.Model
         }
 
 
+        /// <summary>Gets or sets the place name.</summary>
         [Column("NAME")]
         public string Name
         {
@@ -46,6 +68,7 @@ namespace FHTW.Swen2.Places.Model
         } = string.Empty;
 
 
+        /// <summary>Gets or sets the place description.</summary>
         [Column("DESCRIPTION")]
         public string Description
         {
@@ -53,6 +76,7 @@ namespace FHTW.Swen2.Places.Model
         } = string.Empty;
 
 
+        /// <summary>Gets or sets the location of the place.</summary>
         [NotMapped]
         public ILocation? Location
         {
@@ -61,6 +85,7 @@ namespace FHTW.Swen2.Places.Model
         }
 
 
+        /// <summary>Gets a collection of stories about the place.</summary>
         public ICollection<Story> Stories
         {
             get
@@ -76,6 +101,12 @@ namespace FHTW.Swen2.Places.Model
         }
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private properties                                                                                       //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Gets or sets a string representing the location of the place.</summary>
         [Column("LOCATION")]
         internal string _Location
         {
