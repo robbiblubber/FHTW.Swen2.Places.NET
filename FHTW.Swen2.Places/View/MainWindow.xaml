@@ -40,7 +40,9 @@
                     Content="{Binding Button3.Text}" Visibility="{Binding Button3.Visibility}" Command="{Binding Button3.Command}"/>
         </Grid>
         <Grid>
-            <ListBox BorderThickness="0"></ListBox>
+            <ListBox BorderThickness="0" Visibility="{Binding ResultBoxVisibility}">
+            </ListBox>
+            <local:PlaceControl Visibility="{Binding PlaceControlVisibility}"/>
         </Grid>
     </DockPanel>
 </Window>
