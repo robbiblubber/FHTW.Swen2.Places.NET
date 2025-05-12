@@ -9,28 +9,54 @@ namespace FHTW.Swen2.Places.ViewModel
     /// <summary>This class provides the main view model for the application.</summary>
     public sealed class MainViewModel: INotifyPropertyChanged
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private members                                                                                          //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Result box visiblility.</summary>
         private Visibility _ResultBoxVisibility = Visibility.Hidden;
+
+        /// <summary>Place control visibility.</summary>
         private Visibility _PlaceControlVisibility = Visibility.Hidden;
 
+        /// <summary>Search expression for search.</summary>
         private string _SearchExpression = string.Empty;
 
+        /// <summary>View model for button 1.</summary>
         private ButtonViewModel _Button1 = ButtonViewModel.EMPTY;
+
+        /// <summary>View model for button 2.</summary>
         private ButtonViewModel _Button2 = ButtonViewModel.EMPTY;
+
+        /// <summary>View model for button 3.</summary>
         private ButtonViewModel _Button3 = ButtonViewModel.EMPTY;
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // constructors                                                                                             //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Creates a new instance of this class.</summary>
         public MainViewModel() 
         {
             PlaceDetails = new(this);
         }
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public properties                                                                                        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Gets the view model for the place details.</summary>
         public PlaceViewModel PlaceDetails
         {
             get;
         }
 
 
+        /// <summary>Gets or sets the visibility for the search result list view.</summary>
         public Visibility ResultBoxVisibility
         {
             get { return _ResultBoxVisibility; }
@@ -45,6 +71,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the visibility for the place details view.</summary>
         public Visibility PlaceControlVisibility
         {
             get { return _PlaceControlVisibility; }
@@ -59,6 +86,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the search expression string.</summary>
         public string SearchExpression
         {
             get { return _SearchExpression; }
@@ -72,6 +100,8 @@ namespace FHTW.Swen2.Places.ViewModel
             }
         }
 
+
+        /// <summary>Gets or sets the view model for button 1.</summary>
         public ButtonViewModel Button1
         {
             get { return _Button1; }
@@ -86,6 +116,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the view model for button 2.</summary>
         public ButtonViewModel Button2
         {
             get { return _Button2; }
@@ -100,6 +131,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the view model for button 3.</summary>
         public ButtonViewModel Button3
         {
             get { return _Button3; }
@@ -114,12 +146,19 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public methods                                                                                           //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Shows no control in the main window.</summary>
         public void ShowNothing()
         {
             ResultBoxVisibility = PlaceControlVisibility = Visibility.Hidden;
         }
 
 
+        /// <summary>Shows the search result box in the main window.</summary>
         public void ShowSearchResults()
         {
             ResultBoxVisibility = Visibility.Visible;
@@ -127,6 +166,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Shows the place details control in the main window.</summary>
         public void ShowPlace()
         {
             PlaceControlVisibility = Visibility.Visible;

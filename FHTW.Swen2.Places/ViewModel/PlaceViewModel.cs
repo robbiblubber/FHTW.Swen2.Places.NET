@@ -8,36 +8,73 @@ using FHTW.Swen2.Places.Model;
 
 namespace FHTW.Swen2.Places.ViewModel
 {
-    public class PlaceViewModel: INotifyPropertyChanged
+    /// <summary>This class implements the view model for the place details control.</summary>
+    public sealed class PlaceViewModel: INotifyPropertyChanged
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private members                                                                                          //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Place shown.</summary>
         private Place? _Place;
 
+        /// <summary>Place name.</summary>
         private string _Name = string.Empty;
+
+        /// <summary>Place description.</summary>
         private string _Description = string.Empty;
+
+        /// <summary>Coordinates latitude.</summary>
         private string _Latitude = string.Empty;
+
+        /// <summary>Coordinates longitude.</summary>
         private string _Longitude = string.Empty;
+
+        /// <summary>Address street.</summary>
         private string _Street = string.Empty;
+
+        /// <summary>Address postal code.</summary>
         private string _Code = string.Empty;
+
+        /// <summary>Address town.</summary>
         private string _Town = string.Empty;
+
+        /// <summary>Address country.</summary>
         private string _Country = string.Empty;
 
+        /// <summary>Flag indicating if the address (instead of coordinates) is shown.</summary>
         private bool _AddressShowing;
 
+        /// <summary>Flag indicating if the control is locked (read-only).</summary>
         private bool _Locked = true;
 
 
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // constructors                                                                                             //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Creates a new instance of this class.</summary>
+        /// <param name="parent">Parent main view model.</param>
         public PlaceViewModel(MainViewModel parent) 
         {
             Parent = parent;
         }
 
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public properties                                                                                        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Gets the parent main view model.</summary>
         public MainViewModel Parent
         {
             get;
         }
 
 
+        /// <summary>Gets or sets the place shown in the control.</summary>
         public Place? Place
         {
             get { return _Place; }
@@ -50,6 +87,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets if the control is locked (read-only).</summary>
         public bool Locked
         {
             get { return _Locked; }
@@ -66,6 +104,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets if the address is shown instead of the coordinates.</summary>
         public bool AddressShowing
         {
             get { return _AddressShowing; }
@@ -82,6 +121,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the place name.</summary>
         public string Name
         {
             get { return _Name; }
@@ -96,6 +136,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the place description.</summary>
         public string Description
         {
             get { return _Description; }
@@ -110,6 +151,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the place latitude.</summary>
         public string Latitude
         {
             get { return _Latitude; }
@@ -124,6 +166,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the place longitude.</summary>
         public string Longitude
         {
             get { return _Longitude; }
@@ -138,6 +181,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the street of the address.</summary>
         public string Street
         {
             get { return _Street; }
@@ -152,6 +196,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the postal code of the address.</summary>
         public string Code
         {
             get { return _Code; }
@@ -166,6 +211,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the town of the address.</summary>
         public string Town
         {
             get { return _Town; }
@@ -180,6 +226,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets or sets the city of the address.</summary>
         public string Country
         {
             get { return _Country; }
@@ -194,6 +241,8 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets the backgroud color of the text boxes in the control.</summary>
+        /// <remarks>The text boxes will have a white (Window) background in view mode, and a green background in edit mode.</remarks>
         public string TextBoxColor
         {
             get
@@ -204,27 +253,33 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets the visibility of the switch link.</summary>
         public Visibility SwitchLinkVisibility
         {
             get { return _Locked ? Visibility.Hidden : Visibility.Visible; }
         }
 
 
+        /// <summary>Gets the visibility of the address fields.</summary>
         public Visibility AddressVisibility
         {
             get { return AddressShowing ? Visibility.Visible : Visibility.Hidden; }
         }
 
 
+        /// <summary>Gets the visibility of the coordinates fields.</summary>
         public Visibility CoordinatesVisibility
         {
             get { return AddressShowing ? Visibility.Hidden : Visibility.Visible; }
         }
 
 
-        public event PropertyChangedEventHandler? PropertyChanged;
 
-
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // public methods                                                                                           //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Resets the control contents.</summary>
         public void Reset()
         {
             Locked = true;
@@ -257,5 +312,14 @@ namespace FHTW.Swen2.Places.ViewModel
                 AddressShowing = false;
             }
         }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // [interface] INotifyPropertyChanged                                                                       //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Occurs when a property has changed.</summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }
