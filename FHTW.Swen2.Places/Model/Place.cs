@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 
 
@@ -18,9 +17,6 @@ namespace FHTW.Swen2.Places.Model
         // private members                                                                                          //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        /// <summary>Lazy loader.</summary>
-        private readonly ILazyLoader? _Lazy;
-
         /// <summary>Stories for this instance.</summary>
         private ICollection<Story>? _Stories;
 
@@ -36,14 +32,6 @@ namespace FHTW.Swen2.Places.Model
         /// <summary>Creates a new instance of this class.</summary>
         public Place()
         {}
-
-
-        /// <summary>Creates a new instance of this class.</summary>
-        /// <param name="lazy">Lazy loader.</param>
-        private Place(ILazyLoader? lazy)
-        {
-            _Lazy = lazy;
-        }
 
 
 
@@ -88,18 +76,18 @@ namespace FHTW.Swen2.Places.Model
         /// <summary>Gets a collection of stories about the place.</summary>
         public ICollection<Story> Stories
         {
+            get; set;
+        } = new List<Story>();
+
+
+        public bool Exists
+        {
             get
             {
-                if(_Lazy is null)
-                {
-                    if(_Stories is null) { _Stories = new List<Story>(); }
-                    return _Stories;
-                }
-
-                return _Lazy.Load(this, ref _Stories) ?? (_Stories = new List<Story>());
+                using DataContext db = new();
+                return db.Places.Contains(this);
             }
         }
-
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,6 +125,38 @@ namespace FHTW.Swen2.Places.Model
                 {
                     Location = JsonSerializer.Deserialize<Address>(value[7..]);
                 }
+            }
+        }
+
+
+        public void Save()
+        {
+            using DataContext db = new();
+
+            Place? me = db.Places.FirstOrDefault(m => m.ID == ID);
+            if(me is null)
+            {
+                db.Places.Add(this);
+            }
+            else
+            {
+                me.Name = Name;
+                me.Description = Description;
+                me.Location = Location;
+            }
+            db.SaveChanges();
+        }
+
+
+        public void Delete()
+        {
+            using DataContext db = new();
+
+            Place? me = db.Places.FirstOrDefault(m => m.ID == ID);
+            if(me is not null)
+            {
+                db.Remove(me);
+                db.SaveChanges();
             }
         }
     }

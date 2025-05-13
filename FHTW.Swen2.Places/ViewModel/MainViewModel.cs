@@ -41,6 +41,8 @@ namespace FHTW.Swen2.Places.ViewModel
         public MainViewModel() 
         {
             PlaceDetails = new(this);
+
+            Button1 = new(true, "New", new NewPlaceCommand(this));
         }
 
 

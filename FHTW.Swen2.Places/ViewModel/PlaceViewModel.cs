@@ -274,6 +274,18 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        public bool CanSave
+        {
+            get
+            {
+                if(string.IsNullOrWhiteSpace(Name)) return false;
+
+                // TODO: check location with map service
+
+                return true;
+            }
+        }
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // public methods                                                                                           //
@@ -314,11 +326,40 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        public void Save()
+        {
+            if(Place is null) return;
+
+            Locked = true;
+
+            Place.Name = Name;
+            Place.Description = Description;
+
+            if(AddressShowing)
+            {
+                Place.Location = new Address(Code, Street, Town, Country);
+            }
+            else
+            {
+                Place.Location = new Coordinates(Convert.ToDouble(Latitude), Convert.ToDouble(Longitude));
+            }
+
+            Place.Save();
+        }
+
+
+        public void Delete()
+        {
+            Place?.Delete();
+            Place = null;
+        }
+
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // [interface] INotifyPropertyChanged                                                                       //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler? PropertyChanged;
     }
