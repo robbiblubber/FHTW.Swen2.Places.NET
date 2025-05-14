@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 
@@ -48,6 +49,9 @@ namespace FHTW.Swen2.Places.ViewModel
         /// <summary>Flag indicating if the control is locked (read-only).</summary>
         private bool _Locked = true;
 
+        /// <summary>Toggle location command.</summary>
+        private ToggleLocationCommand? _ToggleLocationCommand = null;
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,11 +85,32 @@ namespace FHTW.Swen2.Places.ViewModel
             set
             {
                 _Place = value;
-                
+
+                Stories.Clear();
+                if(_Place is not null)
+                {
+                    foreach(Story i in _Place.Stories) { Stories.Add(new(Parent, i)); }
+                }
+
                 Reset();
             }
         }
 
+
+        public ObservableCollection<StoryViewModel> Stories
+        {
+            get;
+        } = new();
+
+
+        public ToggleLocationCommand ToggleLocationCommand
+        {
+            get
+            {
+                if(_ToggleLocationCommand is null) { _ToggleLocationCommand = new(Parent); }
+                return _ToggleLocationCommand;
+            }
+        }
 
         /// <summary>Gets or sets if the control is locked (read-only).</summary>
         public bool Locked
