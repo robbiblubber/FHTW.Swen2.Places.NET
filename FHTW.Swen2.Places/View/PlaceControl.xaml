@@ -9,12 +9,11 @@
              d:DesignHeight="450" d:DesignWidth="1200">
     <Grid Background="{x:Static SystemColors.ControlBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="4"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column="1" Width="4" Background="{x:Static SystemColors.ControlDarkDarkBrush}" ShowsPreview="True"/>
-
+        <GridSplitter Grid.Column="1" Width="4" Background="{x:Static SystemColors.ControlDarkDarkBrush}" ShowsPreview="True" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"/>
@@ -23,13 +22,13 @@
             </Grid.RowDefinitions>
 
             <TextBox Grid.Row="0" Margin="12,12,12,4" Height="23" TabIndex="0"
-                     Text="{Binding PlaceDetails.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     IsReadOnly="{Binding PlaceDetails.Locked}"
-                     Background="{Binding PlaceDetails.TextBoxColor}"/>
+             Text="{Binding PlaceDetails.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+             IsReadOnly="{Binding PlaceDetails.Locked}"
+             Background="{Binding PlaceDetails.TextBoxColor}"/>
             <TextBox Grid.Row="2" Margin="12,4,12,12" TextWrapping="Wrap" TabIndex="6"
-                     Text="{Binding PlaceDetails.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     IsReadOnly="{Binding PlaceDetails.Locked}"
-                     Background="{Binding PlaceDetails.TextBoxColor}"/>
+             Text="{Binding PlaceDetails.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+             IsReadOnly="{Binding PlaceDetails.Locked}"
+             Background="{Binding PlaceDetails.TextBoxColor}"/>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -51,18 +50,18 @@
                     <Label Grid.Row="0" Grid.Column="0" Content="La_titutde:" Target="{Binding ElementName=_TextLat}"/>
                     <Label Grid.Row="1" Grid.Column="0" Content="Lon_gitutde:" Target="{Binding ElementName=_TextLong}"/>
                     <TextBox Grid.Row="0" Grid.Column="1" Height="23" Width="96" HorizontalAlignment="Left"
-                             Name="_TextLat" TabIndex="1"
-                             Text="{Binding PlaceDetails.Latitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding PlaceDetails.Locked}"
-                             Background="{Binding PlaceDetails.TextBoxColor}"/>
+                     Name="_TextLat" TabIndex="1"
+                     Text="{Binding PlaceDetails.Latitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="{Binding PlaceDetails.Locked}"
+                     Background="{Binding PlaceDetails.TextBoxColor}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Height="23" Width="96" HorizontalAlignment="Left"
-                             Name="_TextLong" TabIndex="2"
-                             Text="{Binding PlaceDetails.Longitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding PlaceDetails.Locked}"
-                             Background="{Binding PlaceDetails.TextBoxColor}"/>
+                     Name="_TextLong" TabIndex="2"
+                     Text="{Binding PlaceDetails.Longitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="{Binding PlaceDetails.Locked}"
+                     Background="{Binding PlaceDetails.TextBoxColor}"/>
 
                     <Label Grid.Row="2" Grid.Column="1" Margin="12,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Cursor="Hand"
-                           Visibility="{Binding PlaceDetails.SwitchLinkVisibility}">
+                   Visibility="{Binding PlaceDetails.SwitchLinkVisibility}">
                         <TextBlock Text="Switch to Address" FontWeight="Medium" TextDecorations="Underline"/>
                         <Label.InputBindings>
                             <MouseBinding MouseAction="LeftClick" Command="{Binding PlaceDetails.ToggleLocationCommand}"/>
@@ -85,34 +84,34 @@
                     <Label Grid.Row="1" Grid.Column="0" Content="_Town:" Target="{Binding ElementName=_TextCode}"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="_Country:" Target="{Binding ElementName=_TextCountry}"/>
                     <TextBox Grid.Row="0" Grid.Column="1" Height="23"
-                             Name="_TextStreet" TabIndex="1"
-                             Text="{Binding PlaceDetails.Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding PlaceDetails.Locked}"
-                             Background="{Binding PlaceDetails.TextBoxColor}"/>
+                     Name="_TextStreet" TabIndex="1"
+                     Text="{Binding PlaceDetails.Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="{Binding PlaceDetails.Locked}"
+                     Background="{Binding PlaceDetails.TextBoxColor}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Height="23" Width="96" HorizontalAlignment="Left"
-                             Name="_TextCode" TabIndex="2"
-                             Text="{Binding PlaceDetails.Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding PlaceDetails.Locked}"
-                             Background="{Binding PlaceDetails.TextBoxColor}"/>
+                     Name="_TextCode" TabIndex="2"
+                     Text="{Binding PlaceDetails.Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="{Binding PlaceDetails.Locked}"
+                     Background="{Binding PlaceDetails.TextBoxColor}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Height="23" Margin="108,0,0,0"
-                             Name="_TextTown" TabIndex="3"
-                             Text="{Binding PlaceDetails.Town, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding PlaceDetails.Locked}"
-                             Background="{Binding PlaceDetails.TextBoxColor}"/>
+                     Name="_TextTown" TabIndex="3"
+                     Text="{Binding PlaceDetails.Town, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="{Binding PlaceDetails.Locked}"
+                     Background="{Binding PlaceDetails.TextBoxColor}"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Height="23"
-                             Name="_TextCountry" TabIndex="4"
-                             Text="{Binding PlaceDetails.Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding PlaceDetails.Locked}"
-                             Background="{Binding PlaceDetails.TextBoxColor}"/>
+                     Name="_TextCountry" TabIndex="4"
+                     Text="{Binding PlaceDetails.Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     IsReadOnly="{Binding PlaceDetails.Locked}"
+                     Background="{Binding PlaceDetails.TextBoxColor}"/>
                     <Label Grid.Row="3" Grid.Column="1" Margin="12,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Cursor="Hand"
-                           Visibility="{Binding PlaceDetails.SwitchLinkVisibility}">
+                   Visibility="{Binding PlaceDetails.SwitchLinkVisibility}">
                         <TextBlock Text="Switch to Coordinates" FontWeight="Medium" TextDecorations="Underline"/>
                         <Label.InputBindings>
                             <MouseBinding MouseAction="LeftClick" Command="{Binding PlaceDetails.ToggleLocationCommand}"/>
                         </Label.InputBindings>
                     </Label>
                 </Grid>
-                
+
                 <wv:WebView2 Grid.Column="1" Margin="16"/>
             </Grid>
         </Grid>

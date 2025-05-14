@@ -16,7 +16,7 @@ namespace FHTW.Swen2.Places
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         /// <summary>Gets or sets the places in the application.</summary>
-        public DbSet<Place> Places 
+        public virtual DbSet<Place> Places 
         {
             get; set; 
         }

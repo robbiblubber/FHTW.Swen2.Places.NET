@@ -150,7 +150,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
-        /// <summary>Gets common buttons.</summary>
+        /// <summary>Gets the common buttons view models.</summary>
         public CommonButtonViewModel CommonButtons
         {
             get;
@@ -183,6 +183,7 @@ namespace FHTW.Swen2.Places.ViewModel
             PlaceControlVisibility = Visibility.Visible;
             ResultBoxVisibility = Visibility.Hidden;
         }
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////

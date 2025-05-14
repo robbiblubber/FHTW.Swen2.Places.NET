@@ -97,12 +97,14 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets the story view models in this view model.</summary>
         public ObservableCollection<StoryViewModel> Stories
         {
             get;
         } = new();
 
 
+        /// <summary>Gets the toggle location view command.</summary>
         public ToggleLocationCommand ToggleLocationCommand
         {
             get
@@ -111,6 +113,7 @@ namespace FHTW.Swen2.Places.ViewModel
                 return _ToggleLocationCommand;
             }
         }
+
 
         /// <summary>Gets or sets if the control is locked (read-only).</summary>
         public bool Locked

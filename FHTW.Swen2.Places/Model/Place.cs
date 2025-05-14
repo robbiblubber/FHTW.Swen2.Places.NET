@@ -11,14 +11,14 @@ namespace FHTW.Swen2.Places.Model
 {
     /// <summary>This class represents a place.</summary>
     [Table("PLACES")][PrimaryKey("ID")]
-    public sealed class Place
+    public class Place
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // private members                                                                                          //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         /// <summary>Location.</summary>
-        private ILocation? _BackingLocation;
+        protected ILocation? _BackingLocation;
 
 
 
@@ -77,6 +77,7 @@ namespace FHTW.Swen2.Places.Model
         } = new List<Story>();
 
 
+        /// <summary>Gets if the place exists in the database.</summary>
         public bool Exists
         {
             get
@@ -85,6 +86,7 @@ namespace FHTW.Swen2.Places.Model
                 return db.Places.Contains(this);
             }
         }
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,6 +128,7 @@ namespace FHTW.Swen2.Places.Model
         }
 
 
+        /// <summary>Saves the place to the database.</summary>
         public void Save()
         {
             using DataContext db = new();
@@ -145,6 +148,7 @@ namespace FHTW.Swen2.Places.Model
         }
 
 
+        /// <summary>Deletes the place from the database.</summary>
         public void Delete()
         {
             using DataContext db = new();
