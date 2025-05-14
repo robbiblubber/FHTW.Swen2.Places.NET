@@ -17,9 +17,6 @@ namespace FHTW.Swen2.Places.Model
         // private members                                                                                          //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        /// <summary>Stories for this instance.</summary>
-        private ICollection<Story>? _Stories;
-
         /// <summary>Location.</summary>
         private ILocation? _BackingLocation;
 

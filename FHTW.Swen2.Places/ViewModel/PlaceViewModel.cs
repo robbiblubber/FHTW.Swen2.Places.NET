@@ -274,6 +274,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets if the place can be saved.</summary>
         public bool CanSave
         {
             get
@@ -326,6 +327,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Saves the changes to the place.</summary>
         public void Save()
         {
             if(Place is null) return;
@@ -348,6 +350,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Deletes the place.</summary>
         public void Delete()
         {
             Place?.Delete();

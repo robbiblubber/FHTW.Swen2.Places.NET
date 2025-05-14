@@ -23,13 +23,13 @@ namespace FHTW.Swen2.Places.ViewModel
         private string _SearchExpression = string.Empty;
 
         /// <summary>View model for button 1.</summary>
-        private ButtonViewModel _Button1 = ButtonViewModel.EMPTY;
+        private ButtonViewModel _Button1;
 
         /// <summary>View model for button 2.</summary>
-        private ButtonViewModel _Button2 = ButtonViewModel.EMPTY;
+        private ButtonViewModel _Button2;
 
         /// <summary>View model for button 3.</summary>
-        private ButtonViewModel _Button3 = ButtonViewModel.EMPTY;
+        private ButtonViewModel _Button3;
 
 
 
@@ -41,8 +41,10 @@ namespace FHTW.Swen2.Places.ViewModel
         public MainViewModel() 
         {
             PlaceDetails = new(this);
+            CommonButtons = new(this);
 
-            Button1 = new(true, "New", new NewPlaceCommand(this));
+            _Button1 = CommonButtons.NEW;
+            _Button2 = _Button3 = CommonButtons.EMPTY;
         }
 
 
@@ -145,6 +147,13 @@ namespace FHTW.Swen2.Places.ViewModel
                     PropertyChanged?.Invoke(this, new(nameof(Button3)));
                 }
             }
+        }
+
+
+        /// <summary>Gets common buttons.</summary>
+        public CommonButtonViewModel CommonButtons
+        {
+            get;
         }
 
 

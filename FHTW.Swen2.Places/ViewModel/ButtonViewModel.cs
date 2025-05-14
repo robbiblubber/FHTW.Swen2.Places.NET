@@ -8,12 +8,8 @@ using System.Windows.Input;
 namespace FHTW.Swen2.Places.ViewModel
 {
     /// <summary>This class provides a configurable view model for a button.</summary>
-    public class ButtonViewModel: INotifyPropertyChanged
+    public sealed class ButtonViewModel
     {
-        public static readonly ButtonViewModel EMPTY = new(false);
-
-
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // constructors                                                                                             //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,15 +51,6 @@ namespace FHTW.Swen2.Places.ViewModel
         {
             get;
         }
-
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // [interface] INotifyPropertyChanged                                                                       //
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        /// <summary>Occurs when a property has changed.</summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
 
 
 
