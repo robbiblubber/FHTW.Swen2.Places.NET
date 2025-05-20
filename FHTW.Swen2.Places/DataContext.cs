@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Data;
 
 using FHTW.Swen2.Places.Model;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 
 
@@ -11,6 +13,10 @@ namespace FHTW.Swen2.Places
     /// <summary>This class implements the Entity Framework context for the data model.</summary>
     public class DataContext: DbContext
     {
+        private static bool _RebuildRequired = true;
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // public properties                                                                                        //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,6 +27,27 @@ namespace FHTW.Swen2.Places
             get; set; 
         }
 
+
+
+        public void RebuildFtsIndex()
+        {
+            IDbContextTransaction t = Database.BeginTransaction();
+
+            Database.ExecuteSql($"DELETE FROM PLACES_FTX");
+            Database.ExecuteSql($"INSERT INTO PLACES_FTX (PLACE_ID, TEXT) SELECT ID, NAME FROM PLACES");
+            Database.ExecuteSql($"INSERT INTO PLACES_FTX (PLACE_ID, TEXT) SELECT ID, DESCRIPTION FROM PLACES");
+            Database.ExecuteSql($"INSERT INTO PLACES_FTX (PLACE_ID, TEXT) SELECT PLACE_ID, TEXT FROM STORIES");
+            t.Commit();
+            _RebuildRequired = false;
+        }
+
+
+        IEnumerable<Place> SearchPlaces(string searchPattern)
+        {
+            if(_RebuildRequired) { RebuildFtsIndex(); }
+
+            return Places.FromSql($"SELECT * FROM PLACES P WHERE EXISTS (SELECT 1 FROM PLACES_FTX F WHERE F.PLACE_ID = P.ID AND F.TEXT MATCH {searchPattern})");
+        }
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,6 +73,13 @@ namespace FHTW.Swen2.Places
                         .HasConversion(m => string.Join(',', m),
                                        m => m.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
             base.OnModelCreating(modelBuilder);
+        }
+
+
+        public override int SaveChanges()
+        {
+            _RebuildRequired = true;
+            return base.SaveChanges();
         }
     }
 }

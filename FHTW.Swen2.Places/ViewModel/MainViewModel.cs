@@ -42,6 +42,7 @@ namespace FHTW.Swen2.Places.ViewModel
         {
             PlaceDetails = new(this);
             CommonButtons = new(this);
+            SearchResults = new(this);
 
             _Button1 = CommonButtons.NEW;
             _Button2 = _Button3 = CommonButtons.EMPTY;
@@ -59,6 +60,11 @@ namespace FHTW.Swen2.Places.ViewModel
             get;
         }
 
+
+        public SearchResultListViewModel SearchResults
+        {
+            get;
+        }
 
         /// <summary>Gets or sets the visibility for the search result list view.</summary>
         public Visibility ResultBoxVisibility
