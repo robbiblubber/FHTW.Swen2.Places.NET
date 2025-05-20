@@ -29,8 +29,14 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Search:" HorizontalAlignment="Left" Margin="8,12,0,0" Grid.Column="0"/>
-            <TextBox Name="_TextSearch" Margin="0,8,0,0" VerticalAlignment="Center" Grid.Column="1"/>
-            <Button Content="Search" Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="3"/>
+            <TextBox Name="_TextSearch" Margin="0,8,0,0" VerticalAlignment="Center" Grid.Column="1"
+                     Text="{Binding SearchExpression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding SearchCommand}" Key="Enter"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button Content="Search" Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="3"
+                    Command="{Binding SearchCommand}"/>
 
             <Button Height="22" Width="64" Margin="0,8,0,0" HorizontalAlignment="Left" Grid.Column="5"
                     Content="{Binding Button1.Text}" Visibility="{Binding Button1.Visibility}" Command="{Binding Button1.Command}"/>
@@ -40,7 +46,24 @@
                     Content="{Binding Button3.Text}" Visibility="{Binding Button3.Visibility}" Command="{Binding Button3.Command}"/>
         </Grid>
         <Grid>
-            <ListBox BorderThickness="0" Visibility="{Binding ResultBoxVisibility}">
+            <ListBox BorderThickness="0" Visibility="{Binding ResultBoxVisibility}"
+                     ItemsSource="{Binding SearchResults.Items}" SelectedIndex="{Binding SearchResults.SelectedIndex}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="2">
+                            <Grid.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SelectCommand}"/>
+                            </Grid.InputBindings>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Margin="10,1,10,1" Grid.Column="0" Text="{Binding Name}"/>
+                            <TextBlock Margin="10,1,10,1" Grid.Column="1" Text="{Binding Description}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
             <local:PlaceControl Visibility="{Binding PlaceControlVisibility}"/>
         </Grid>

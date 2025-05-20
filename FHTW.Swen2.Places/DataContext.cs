@@ -42,7 +42,7 @@ namespace FHTW.Swen2.Places
         }
 
 
-        IEnumerable<Place> SearchPlaces(string searchPattern)
+        public IEnumerable<Place> SearchPlaces(string searchPattern)
         {
             if(_RebuildRequired) { RebuildFtsIndex(); }
 

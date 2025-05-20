@@ -44,6 +44,8 @@ namespace FHTW.Swen2.Places.ViewModel
             CommonButtons = new(this);
             SearchResults = new(this);
 
+            SearchCommand = new(this);
+
             _Button1 = CommonButtons.NEW;
             _Button2 = _Button3 = CommonButtons.EMPTY;
         }
@@ -153,6 +155,12 @@ namespace FHTW.Swen2.Places.ViewModel
                     PropertyChanged?.Invoke(this, new(nameof(Button3)));
                 }
             }
+        }
+
+
+        public SearchCommand SearchCommand
+        {
+            get;
         }
 
 

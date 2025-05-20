@@ -10,9 +10,14 @@ namespace FHTW.Swen2.Places.ViewModel
 {
     public sealed class SearchResultViewModel
     {
+        private SelectSearchResultCommand _SearchCommand;
+
+
+
         public SearchResultViewModel(MainViewModel parent, Place place)
         {
             Parent = parent;
+            Place = place;
         }
 
 
@@ -37,6 +42,16 @@ namespace FHTW.Swen2.Places.ViewModel
         public string Description
         {
             get { return Place.Description; }
+        }
+
+
+        public SelectSearchResultCommand SelectCommand
+        {
+            get
+            {
+                if(_SearchCommand is null) { _SearchCommand = new(Parent); }
+                return _SearchCommand;
+            }
         }
     }
 }
