@@ -63,10 +63,12 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets the search result view model.</summary>
         public SearchResultListViewModel SearchResults
         {
             get;
         }
+
 
         /// <summary>Gets or sets the visibility for the search result list view.</summary>
         public Visibility ResultBoxVisibility
@@ -158,6 +160,7 @@ namespace FHTW.Swen2.Places.ViewModel
         }
 
 
+        /// <summary>Gets the search command.</summary>
         public SearchCommand SearchCommand
         {
             get;

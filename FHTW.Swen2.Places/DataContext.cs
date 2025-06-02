@@ -28,7 +28,7 @@ namespace FHTW.Swen2.Places
         }
 
 
-
+        /// <summary>Rebuilds the FTS index.</summary>
         public void RebuildFtsIndex()
         {
             IDbContextTransaction t = Database.BeginTransaction();
@@ -42,12 +42,16 @@ namespace FHTW.Swen2.Places
         }
 
 
+        /// <summary>Performs a full text search for a search pattern in places.</summary>
+        /// <param name="searchPattern">Search pattern.</param>
+        /// <returns>Returns a set of places that match the given pattern.</returns>
         public IEnumerable<Place> SearchPlaces(string searchPattern)
         {
             if(_RebuildRequired) { RebuildFtsIndex(); }
 
             return Places.FromSql($"SELECT * FROM PLACES P WHERE EXISTS (SELECT 1 FROM PLACES_FTX F WHERE F.PLACE_ID = P.ID AND F.TEXT MATCH {searchPattern})");
         }
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +80,8 @@ namespace FHTW.Swen2.Places
         }
 
 
+        /// <summary>Saves changes made to this context in the database.</summary>
+        /// <returns>Returns the number of state entries written to the database.</returns>
         public override int SaveChanges()
         {
             _RebuildRequired = true;
