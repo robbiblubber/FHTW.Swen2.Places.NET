@@ -112,7 +112,8 @@
                     </Label>
                 </Grid>
 
-                <wv:WebView2 Grid.Column="1" Margin="16"/>
+                <wv:WebView2 Grid.Column="1" Margin="16"
+                             Source="{Binding PlaceDetails.MapSource, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </Grid>
         <ScrollViewer Grid.Column="2">

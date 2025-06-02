@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Text;
 using System.Windows;
 
 using FHTW.Swen2.Places.Model;
@@ -12,6 +14,18 @@ namespace FHTW.Swen2.Places.ViewModel
     /// <summary>This class implements the view model for the place details control.</summary>
     public sealed class PlaceViewModel: INotifyPropertyChanged
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private constants                                                                                        //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>Map template.</summary>
+        private static readonly string _MAP_TEMPLATE = _GetMapTemplate();
+
+        /// <summary>Empty HTML document.</summary>
+        private static readonly string _EMPTY = "<!DOCTYPE html><head/><body/></html";
+
+
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // private members                                                                                          //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,6 +66,9 @@ namespace FHTW.Swen2.Places.ViewModel
         /// <summary>Toggle location command.</summary>
         private ToggleLocationCommand? _ToggleLocationCommand = null;
 
+        /// <summary>Location valid flag.</summary>
+        private bool _LocationValid = false;
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +80,22 @@ namespace FHTW.Swen2.Places.ViewModel
         public PlaceViewModel(MainViewModel parent) 
         {
             Parent = parent;
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // private static methods                                                                                   //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>Reads the map template.</summary>
+        /// <returns>Map template source.</returns>
+        private static string _GetMapTemplate()
+        {
+            string fileName = AppContext.BaseDirectory + "leaflet.html";
+            if(File.Exists(fileName)) { return File.ReadAllText(fileName); }
+
+            return _EMPTY;
         }
 
 
@@ -189,6 +222,7 @@ namespace FHTW.Swen2.Places.ViewModel
                 { 
                     _Latitude = value;
                     PropertyChanged?.Invoke(this, new(nameof(Latitude)));
+                    PropertyChanged?.Invoke(this, new(nameof(MapSource)));
                 }
             }
         }
@@ -204,6 +238,7 @@ namespace FHTW.Swen2.Places.ViewModel
                 { 
                     _Longitude = value;
                     PropertyChanged?.Invoke(this, new(nameof(Longitude)));
+                    PropertyChanged?.Invoke(this, new(nameof(MapSource)));
                 }
             }
         }
@@ -219,6 +254,7 @@ namespace FHTW.Swen2.Places.ViewModel
                 { 
                     _Street = value;
                     PropertyChanged?.Invoke(this, new(nameof(Street)));
+                    PropertyChanged?.Invoke(this, new(nameof(MapSource)));
                 }
             }
         }
@@ -234,6 +270,7 @@ namespace FHTW.Swen2.Places.ViewModel
                 { 
                     _Code = value;
                     PropertyChanged?.Invoke(this, new(nameof(Code)));
+                    PropertyChanged?.Invoke(this, new(nameof(MapSource)));
                 }
             }
         }
@@ -249,6 +286,7 @@ namespace FHTW.Swen2.Places.ViewModel
                 { 
                     _Town = value;
                     PropertyChanged?.Invoke(this, new(nameof(Town)));
+                    PropertyChanged?.Invoke(this, new(nameof(MapSource)));
                 }
             }
         }
@@ -264,10 +302,40 @@ namespace FHTW.Swen2.Places.ViewModel
                 { 
                     _Country = value;
                     PropertyChanged?.Invoke(this, new(nameof(Country)));
+                    PropertyChanged?.Invoke(this, new(nameof(MapSource)));
                 }
             }
         }
 
+
+        /// <summary>Gets the map source URI.</summary>
+        public Uri MapSource
+        {
+            get
+            {
+                string src;
+                Coordinates? c = AddressShowing ?
+                                 MapResolver.Resolve(Street, Code, Town, Country) :
+                                 MapResolver.Resolve(Latitude, Longitude);
+
+                if(c is null)
+                {
+                    _LocationValid = false;
+                    src = _EMPTY;
+                }
+                else
+                {
+                    _LocationValid = true;
+                    src = _MAP_TEMPLATE
+                          .Replace("$lat", c.Latitude.ToString().Replace(',', '.'))
+                          .Replace("$lng", c.Longitude.ToString().Replace(',', '.'));
+                }
+
+                PropertyChanged?.Invoke(this, new(nameof(CanSave)));
+
+                return new($"data:text/html;base64,{Convert.ToBase64String(Encoding.UTF8.GetBytes(src))}");
+            }
+        }
 
         /// <summary>Gets the backgroud color of the text boxes in the control.</summary>
         /// <remarks>The text boxes will have a white (Window) background in view mode, and a green background in edit mode.</remarks>
@@ -309,9 +377,7 @@ namespace FHTW.Swen2.Places.ViewModel
             {
                 if(string.IsNullOrWhiteSpace(Name)) return false;
 
-                // TODO: check location with map service
-
-                return true;
+                return _LocationValid;
             }
         }
 
