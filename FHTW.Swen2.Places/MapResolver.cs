@@ -55,9 +55,12 @@ namespace FHTW.Swen2.Places
             double? lat = null, lng = null;
 
             using HttpClient cl = new();
+            string s = $"https://api.openrouteservice.org/geocode/search?api_key={_KEY}&" +
+                       $"text={HttpUtility.UrlEncode(street + ", " + code + ", " + town + ", " + country)}";
+
             using JsonDocument data = JsonDocument.Parse(cl.GetAsync(
                 $"https://api.openrouteservice.org/geocode/search?api_key={_KEY}&" +
-                $"text?{HttpUtility.UrlEncode(street + ", " + code + ", " + town + ", " + country)}")
+                $"text={HttpUtility.UrlEncode(street + ", " + code + ", " + town + ", " + country)}")
                 .Result.Content.ReadAsStringAsync().Result ?? "");
             
             if(data == null) { return null; }
