@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Data;
+using System.Numerics;
 
 using FHTW.Swen2.Places.Model;
 
+using log4net;
+
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 
 
@@ -13,6 +17,8 @@ namespace FHTW.Swen2.Places
     /// <summary>This class implements the Entity Framework context for the data model.</summary>
     public class DataContext: DbContext
     {
+        private static ILog _Log = LogManager.GetLogger(typeof(DataContext));
+
         private static bool _RebuildRequired = true;
 
 
@@ -39,6 +45,8 @@ namespace FHTW.Swen2.Places
             Database.ExecuteSql($"INSERT INTO PLACES_FTX (PLACE_ID, TEXT) SELECT PLACE_ID, TEXT FROM STORIES");
             t.Commit();
             _RebuildRequired = false;
+
+            _Log.Debug("Rebuilt FTS index");
         }
 
 
@@ -49,6 +57,7 @@ namespace FHTW.Swen2.Places
         {
             if(_RebuildRequired) { RebuildFtsIndex(); }
 
+            _Log.Debug($"Searched for '{searchPattern}'.");
             return Places.FromSql($"SELECT * FROM PLACES P WHERE EXISTS (SELECT 1 FROM PLACES_FTX F WHERE F.PLACE_ID = P.ID AND F.TEXT MATCH {searchPattern})");
         }
 
@@ -85,6 +94,33 @@ namespace FHTW.Swen2.Places
         public override int SaveChanges()
         {
             _RebuildRequired = true;
+
+            foreach(EntityEntry i in ChangeTracker.Entries())
+            {
+                string? name = null;
+                if(i.Entity is Place p)
+                {
+                    name = $"place '{p.Name}'";
+                }
+                else if(i.Entity is Story s)
+                {
+                    name = $"story '{s.Text}'";
+                }
+
+                string? op = null;
+                switch(i.State)
+                {
+                    case EntityState.Added: op = "Added"; break;
+                    case EntityState.Modified: op = "Modified"; break;
+                    case EntityState.Deleted: op = "Deleted"; break;
+                }
+
+                if(!((name is null) || (op is null)))
+                {
+                    _Log.Debug($"{op} {name}.");
+                }
+            }
+
             return base.SaveChanges();
         }
     }
