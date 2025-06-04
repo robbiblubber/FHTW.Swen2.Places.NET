@@ -45,6 +45,7 @@ namespace FHTW.Swen2.Places.ViewModel
             SearchResults = new(this);
 
             SearchCommand = new(this);
+            GeneratePlaceReportCommand = new(this);
 
             _Button1 = CommonButtons.NEW;
             _Button2 = _Button3 = CommonButtons.EMPTY;
@@ -162,6 +163,13 @@ namespace FHTW.Swen2.Places.ViewModel
 
         /// <summary>Gets the search command.</summary>
         public SearchCommand SearchCommand
+        {
+            get;
+        }
+
+
+        /// <summary>Gets the generate place report command.</summary>
+        public GeneratePlaceReportCommand GeneratePlaceReportCommand
         {
             get;
         }

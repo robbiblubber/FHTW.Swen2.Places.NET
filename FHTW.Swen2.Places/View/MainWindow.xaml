@@ -12,7 +12,7 @@
         <Menu DockPanel.Dock="Top" Height="20">
             <MenuItem Header="File"/>
             <MenuItem Header="Tools">
-                <MenuItem Header="Print Report"/>
+                <MenuItem Header="Generate Place Report" Command="{Binding GeneratePlaceReportCommand}"/>
             </MenuItem>
             <MenuItem Header="Help"/>
         </Menu>
